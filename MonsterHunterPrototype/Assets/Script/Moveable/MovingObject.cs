@@ -47,7 +47,7 @@ public class MovingObject : MonoBehaviour
         Vector3 targetPosition = transform.position + direction * moveSpeed * Time.fixedDeltaTime;
 
         // SmoothDamp로 부드럽게 이동
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, 0.8f);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, 0.15f);
 
     }
 

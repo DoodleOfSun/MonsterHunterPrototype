@@ -27,14 +27,14 @@ public class CamPosMovingByMouse : MonoBehaviour
     public void MovingByMouseX(Vector3 targetPos)
     {
         float mouse_X = 0;
-        float leftWidthMargin = 0.2f;
-        float rightWidthMargin = 0.8f;
+        float leftWidthMargin = 0.1f;
+        float rightWidthMargin = 0.9f;
 
         // 마우스 위치에 따라서 mouse_X를 다르게 설정을 한다.
         // 왼쪽
         if (Input.mousePosition.x < Screen.width * leftWidthMargin)
         {
-            mouse_X = 1f;
+            mouse_X = -1f;
         }
 
         // 중앙
@@ -46,7 +46,7 @@ public class CamPosMovingByMouse : MonoBehaviour
         // 오른쪽
         else if(Input.mousePosition.x >= Screen.width * rightWidthMargin)
         {
-            mouse_X = -1f;
+            mouse_X = 1f;
         }
 
         // 이전과 동일한 위치에 마우스가 위치하는지 확인 

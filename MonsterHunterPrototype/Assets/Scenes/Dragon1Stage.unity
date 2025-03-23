@@ -2923,6 +2923,7 @@ GameObject:
   - component: {fileID: 1525205842}
   - component: {fileID: 1525205848}
   - component: {fileID: 1525205847}
+  - component: {fileID: 1525205849}
   m_Layer: 0
   m_Name: PlayerHunter
   m_TagString: Untagged
@@ -2959,8 +2960,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218048219109107499a3857702059923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 50
-  DashSpeed: 0
+  moveSpeed: 100
+  dashSpeed: 100
 --- !u!114 &1525205848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2973,6 +2974,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de16a842210b2846afdf6e7b91a74a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1525205849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525205841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e81fb2dcfebd74f45905a8752263e6f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 4607728610157952002}
 --- !u!1 &1659722847
 GameObject:
   m_ObjectHideFlags: 0
@@ -7366,10 +7380,10 @@ Animator:
   m_GameObject: {fileID: 4607728610148552292}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 387f98e6cb1c9744e92f93a6cf9ce107, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8ec1cc36f0315db469e1283267f4ee6e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 04f5d658ec9fa324f8d82939bfc64e93, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 

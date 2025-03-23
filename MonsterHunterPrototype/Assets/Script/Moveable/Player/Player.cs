@@ -23,9 +23,16 @@ public class Player : MonoBehaviour
     private PlayerMove pm;
     private PlayerAnimation pa;
 
-    // GetAxis로 입력받은 각 방향
+    // 플레이어의 I/O 입력
     private float InputedXDir;
     private float InputedZDir;
+    private bool isShift;
+    private bool isLeftClick;
+    private bool isRightClick;
+
+    // 딜레이 처리를 위한 코루틴
+    private Coroutine attackAniCoroutine;
+    private Coroutine parryAniCoroutine;
 
 
     void Start()
@@ -40,21 +47,60 @@ public class Player : MonoBehaviour
 
         InputedXDir = 0;
         InputedZDir = 0;
+        isShift = false;
+
+        attackAniCoroutine = null;
+        parryAniCoroutine = null;
     }
 
     void Update()
     {
         AllPlayerInput();
+        AnimationPlay();
     }
 
     void FixedUpdate()
     {
-        pm.MovingByDir(InputedXDir,InputedZDir);
+        pm.MovingByDir(InputedXDir,InputedZDir, isShift);
     }
 
     private void AllPlayerInput()
     {
         InputedXDir = Input.GetAxis("Horizontal");
         InputedZDir = Input.GetAxis("Vertical");
+        isShift = Input.GetButton("Fire3");
+        isLeftClick = Input.GetMouseButtonDown(0);
+        isRightClick = Input.GetMouseButtonDown(1);
     }
+
+    private void AnimationPlay()
+    {
+        pa.MovingAnimation(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), isShift);
+
+        if (attackAniCoroutine == null && isLeftClick)
+        {
+            Debug.Log("공격 발동됨");
+            attackAniCoroutine = StartCoroutine(AttackAnimationWithDelay());
+        }
+        else if (parryAniCoroutine == null && isRightClick)
+        {
+            Debug.Log("패리 발동됨");
+            parryAniCoroutine = StartCoroutine(ParryAnimationWithDelay());
+        }
+    }
+
+    private IEnumerator AttackAnimationWithDelay()
+    {
+        pa.AttackAnimation(isLeftClick);
+        yield return new WaitForSeconds(0.5f);
+        attackAniCoroutine = null;
+    }
+
+    private IEnumerator ParryAnimationWithDelay()
+    {
+        pa.ParryAnimation(isRightClick);
+        yield return new WaitForSeconds(0.5f);
+        parryAniCoroutine = null;
+    }
+
 }

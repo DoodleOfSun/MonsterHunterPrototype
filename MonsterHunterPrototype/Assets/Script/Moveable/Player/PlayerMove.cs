@@ -5,7 +5,7 @@ using UnityEngine;
 // 이 클래스는 플레이어의 움직임을 담당한다.
 public class PlayerMove : MovingObject
 {
-    public float DashSpeed;
+    public float dashSpeed;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -13,9 +13,17 @@ public class PlayerMove : MovingObject
     }
 
     // 받은 방향을 통해 움직인다.
-    public void MovingByDir(float xDir, float zDir)
+    public void MovingByDir(float xDir, float zDir, bool isDash)
     {
-        StartCoroutine(PlayerMoving(xDir, zDir));
+        if (isDash)
+        {
+            moveSpeed += dashSpeed;
+            StartCoroutine(PlayerMoving(xDir, zDir));
+        }
+        else
+        {
+            StartCoroutine(PlayerMoving(xDir, zDir));
+        }
     }
 
     private IEnumerator PlayerMoving(float xDir, float zDir)
