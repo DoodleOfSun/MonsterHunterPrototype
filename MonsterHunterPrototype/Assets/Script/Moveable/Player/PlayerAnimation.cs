@@ -13,7 +13,7 @@ public class PlayerAnimation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -22,17 +22,13 @@ public class PlayerAnimation : MonoBehaviour
 
     }
 
-    public void MovingAnimation(float x, float y, bool isDash)
+    public void MovingAnimation(float x, float y)
     {
         string newState = "";
 
         if (x == 0 && y == 0)
         {
             newState = "Idle";
-        }
-        else if (isDash && x != 0 || isDash && y != 0)
-        {
-            newState = "Sprint";
         }
         else if (x == 1 && y == 0)
         {
@@ -82,8 +78,6 @@ public class PlayerAnimation : MonoBehaviour
 
     public void AttackAnimation(bool isLeftClick)
     {
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
         if (isLeftClick)
         {
             animator.SetTrigger("Attack");
@@ -92,8 +86,6 @@ public class PlayerAnimation : MonoBehaviour
     
     public void ParryAnimation(bool isRightClick)
     {
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
         if (isRightClick)
         {
             animator.SetTrigger("Parry");

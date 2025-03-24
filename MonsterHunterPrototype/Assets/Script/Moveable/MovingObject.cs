@@ -8,9 +8,10 @@ public class MovingObject : MonoBehaviour
     public float moveSpeed;
     //protected Quaternion originalRotate;
     //protected Animator animator
-
+    CharacterController cc;
     protected Rigidbody rb;
 
+    protected float currentSpeed;
     protected Vector3 currentVelocity;
 
     protected virtual void Start()
@@ -18,6 +19,7 @@ public class MovingObject : MonoBehaviour
         //originalRotate = transform.localRotation;
         //animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        currentSpeed = moveSpeed;
     }
 
     protected void RotateMove(Transform centerTransform, Quaternion rotateOrigin)
@@ -25,17 +27,31 @@ public class MovingObject : MonoBehaviour
         StartCoroutine(MovingWithRotating(centerTransform, rotateOrigin));
     }
 
-    // NOTE : 정상작동하나, 기초적이다.
-    private void UsingRb(float xDir, float yDir)
+    // NOTE : MoveToward 사용한 이동 로직
+    protected void UsingMoveTowardByDirection(float xDir, float zDir)
     {
-        float horizontal = rb.position.x + xDir;
-        float vertical = rb.position.y + yDir;
+        Vector3 dirVector3 = new Vector3(xDir, 0f, zDir);
+        dirVector3 = transform.TransformDirection(dirVector3);
 
-        Vector3 targetPos = new Vector3(horizontal, vertical, 0f);
-        Vector3 nextPos = Vector3.MoveTowards(transform.position, targetPos, Time.fixedDeltaTime * moveSpeed);
+        Vector3 targetPos = new Vector3(this.transform.position.x + dirVector3.x, 0f, this.transform.position.z + dirVector3.z);
 
-        rb.MovePosition(nextPos);
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.fixedDeltaTime * moveSpeed);
     }
+    
+
+    // MoveToward을 이용해 지정한 위치로 이동하는 함수
+    protected void UsingMoveTowardByPosition(Vector3 targetPosition)
+    {
+        float horizontal = this.transform.position.x + targetPosition.x;
+        float vertical = this.transform.position.z + targetPosition.z;
+
+        // 목표 위치 계산
+        Vector3 targetPos = new Vector3(horizontal, 0f, vertical);
+
+        // Vector3 MoveToward로 이동
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.fixedDeltaTime * moveSpeed);
+    }
+
 
     // NOTE : 부드러운 이동을 위한 SmoothDamp를 사용한 이동 로직
     protected void UsingSmoothDampByDirection(float xDir, float zDir)
@@ -47,7 +63,7 @@ public class MovingObject : MonoBehaviour
         Vector3 targetPosition = transform.position + direction * moveSpeed * Time.fixedDeltaTime;
 
         // SmoothDamp로 부드럽게 이동
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, 0.15f);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, 1f);
 
     }
 
