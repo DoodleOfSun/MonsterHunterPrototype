@@ -102,6 +102,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         pm.PlayerSpeedReturnToOrigin();
         attackDelayCoroutine = null;
+        pa.MakeEmptyCurrentState();
     }
 
     private IEnumerator DelayWhileParrying()
@@ -111,6 +112,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         pm.PlayerSpeedReturnToOrigin();
         parryDelayCoroutine = null;
+        pa.MakeEmptyCurrentState();
     }
 
 
