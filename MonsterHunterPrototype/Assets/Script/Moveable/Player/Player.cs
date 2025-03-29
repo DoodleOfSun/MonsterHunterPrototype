@@ -21,8 +21,9 @@ public class Player : MonoBehaviour
 
     // 사용하는 스크립트 정의
     private PlayerMove pm;
-    private PlayerAnimation pa;
+    private PlayerAnimation pAnimator;
     private PlayerRotate pr;
+    private PlayerAttack pAttack;
 
     // 플레이어의 I/O 입력
     private float InputedXDir;
@@ -43,8 +44,9 @@ public class Player : MonoBehaviour
     private void Init()
     {
         pm = GetComponent<PlayerMove>();
-        pa = GetComponent<PlayerAnimation>();
+        pAnimator = GetComponent<PlayerAnimation>();
         pr = GetComponent<PlayerRotate>();
+        pAttack = GetComponent<PlayerAttack>();
 
         InputedXDir = 0;
         InputedZDir = 0;
@@ -79,6 +81,7 @@ public class Player : MonoBehaviour
         if (attackDelayCoroutine == null && isLeftClick)
         {
             Debug.Log("공격");
+            pAttack.Attack(transform.position, transform.forward);
             attackDelayCoroutine = StartCoroutine(DelayWhileAttacking());
         }
 
@@ -90,29 +93,28 @@ public class Player : MonoBehaviour
 
         if (attackDelayCoroutine == null && parryDelayCoroutine == null)
         {
-            pa.MovingAnimation(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            pAnimator.MoveOrIdleAnimation(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         }
     }
 
-    // HACK : 대기 시간 도중에 좌클릭이 들어오면 
     private IEnumerator DelayWhileAttacking()
     {
-        pa.AttackAnimation(isLeftClick);
+        pAnimator.AttackAnimation(isLeftClick);
         pm.PlayerFreeze();
         yield return new WaitForSeconds(0.5f);
         pm.PlayerSpeedReturnToOrigin();
         attackDelayCoroutine = null;
-        pa.MakeEmptyCurrentState();
+        pAnimator.MakeEmptyCurrentState();
     }
 
     private IEnumerator DelayWhileParrying()
     {
-        pa.ParryAnimation(isRightClick);
+        pAnimator.ParryAnimation(isRightClick);
         pm.PlayerFreeze();
         yield return new WaitForSeconds(0.5f);
         pm.PlayerSpeedReturnToOrigin();
         parryDelayCoroutine = null;
-        pa.MakeEmptyCurrentState();
+        pAnimator.MakeEmptyCurrentState();
     }
 
 

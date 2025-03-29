@@ -22,7 +22,7 @@ public class PlayerAnimation : MonoBehaviour
 
     }
 
-    public void MovingAnimation(float x, float y)
+    public void MoveOrIdleAnimation(float x, float y)
     {
         string newState = "";
 
@@ -62,12 +62,6 @@ public class PlayerAnimation : MonoBehaviour
         {
             newState = "BackwardRight";
         }
-
-        Debug.Log("현재 입력된 x값 : " + x);
-        Debug.Log("현재 입력된 y값 : " + y);
-
-        Debug.Log("newState에 입력된 값 : " + newState);
-
 
         if (newState != "" && newState != currentState)
         {
