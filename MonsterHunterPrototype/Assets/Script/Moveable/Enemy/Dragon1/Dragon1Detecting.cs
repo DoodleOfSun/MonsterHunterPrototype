@@ -7,14 +7,15 @@ public class Dragon1Detecting : MonoBehaviour
     public float viewRange;
     public float viewAngle;
     public LayerMask targetLayer;
+    private bool isDetected;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        isDetected = false;
     }
 
-    public void Detecting()
+    public bool Detecting()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, viewRange, targetLayer);
         foreach (Collider col in colliders)
@@ -30,12 +31,16 @@ public class Dragon1Detecting : MonoBehaviour
                 {
                     if (hit.collider == col)
                     {
-                        // 시야 내에 목표가 있으면 처리
-                        Debug.Log("Target detected: " + col.tag);
+                        return true;
                     }
                 }
             }
+            else
+            {
+                return false;
+            }
         }
+        return false;
     }
 
     private void OnDrawGizmos()

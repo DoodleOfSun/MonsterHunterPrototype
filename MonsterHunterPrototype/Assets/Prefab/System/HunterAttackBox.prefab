@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 796506110437952418}
   m_Layer: 0
   m_Name: HunterAttackBox
-  m_TagString: Untagged
+  m_TagString: PlayerAttackBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

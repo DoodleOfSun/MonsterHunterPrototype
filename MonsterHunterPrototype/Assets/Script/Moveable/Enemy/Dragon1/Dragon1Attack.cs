@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class Dragon1Attack : MonoBehaviour
 {
     public GameObject attackBoxHolder;
     public GameObject attackBox;

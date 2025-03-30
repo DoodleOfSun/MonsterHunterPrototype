@@ -8,7 +8,7 @@ public class DraginAttackBox : MonoBehaviour
     {
         if (collision.transform.tag == "Player")
         {
-            Debug.Log(transform.tag + "가 해당 tag를 공격함 : " + collision.transform.tag);
+            Debug.Log(transform.name + "가 해당 tag를 공격함 : " + collision.transform.tag);
         }
     }
 }
