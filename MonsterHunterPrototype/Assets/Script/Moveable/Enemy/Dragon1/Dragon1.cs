@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Dragon1 : MonoBehaviour
 {
     public GameObject target;
-
+    public Text enemyStateText;
     private enum Dragon1State
     {
         Idle,
@@ -49,6 +50,7 @@ public class Dragon1 : MonoBehaviour
 
     private void StateMachine()
     {
+        enemyStateText.text = "Monster State : " + state.ToString();
         switch (state)
         {
             case Dragon1State.Idle:
@@ -58,6 +60,7 @@ public class Dragon1 : MonoBehaviour
                 }
                 break;
             case Dragon1State.Battle:
+
 
                 // 타겟이 나한테서 멀어졌음을 감지하는 코드
                 if (Vector3.Distance(this.transform.position, target.transform.position) >= 10f)
@@ -76,6 +79,7 @@ public class Dragon1 : MonoBehaviour
 
             case Dragon1State.Move:
 
+
                 if (!d1m.IsMovingStopped())
                 {
                     d1Ani.MoveOrIdleAnimation(!d1m.IsMovingStopped());
@@ -92,10 +96,12 @@ public class Dragon1 : MonoBehaviour
 
             case Dragon1State.Sleep:
 
+
                 break;
 
             case Dragon1State.Die:
-                
+
+
                 break;
         }
     }
@@ -115,12 +121,15 @@ public class Dragon1 : MonoBehaviour
         stateCoroutine = null;
     }
 
+    // 공격을 할 때는 멈추어야 한다.
     private IEnumerator AttackCoroutine()
     {
         d1Ani.AttackAnimation();
+        d1m.StopMoving();
         yield return new WaitForSeconds(1f);
         d1Attack.Attack(transform.position, transform.forward);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
+        d1m.Move();
         stateCoroutine = null;
     }
 

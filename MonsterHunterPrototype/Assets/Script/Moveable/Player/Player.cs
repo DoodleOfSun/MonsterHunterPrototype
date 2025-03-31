@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
     {
         pAnimator.AttackAnimation(isLeftClick);
         pm.PlayerFreeze();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.1f);
         pm.PlayerSpeedReturnToOrigin();
         attackDelayCoroutine = null;
         pAnimator.MakeEmptyCurrentState();
@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
     {
         pAnimator.ParryAnimation(isRightClick);
         pm.PlayerFreeze();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.8f);
         pm.PlayerSpeedReturnToOrigin();
         parryDelayCoroutine = null;
         pAnimator.MakeEmptyCurrentState();
